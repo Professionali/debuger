@@ -10,7 +10,7 @@
 
 //if(!isset($_SERVER["SCRIPT_NAME"]) || strpos($_SERVER["SCRIPT_NAME"], 'main.php')!==false) {
 
-//	error_reporting(E_ALL);
+	error_reporting(E_ALL);
 
 	include_once 'Debug/Processor.php';
 

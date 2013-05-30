@@ -68,11 +68,13 @@ class Debug_Plugin_Base extends Debug_Plugin_Abstract implements Debug_Plugin_In
                     break;
 
                 case is_string($var):
+
                     $type = 'string';
                     $len = strlen($var);
                     $additional = 'string['.$len.']';
+					
                     if($len > 256) {
-                        $var = substr($var, 0, 256).'...';
+                        $var = mb_substr($var, 0, 256).'...';
                     }
                     $param = ' "'.$this->view->escape($var).'"';
                     break;

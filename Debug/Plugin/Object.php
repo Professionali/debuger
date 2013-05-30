@@ -72,6 +72,8 @@ class Debug_Plugin_Object extends Debug_Plugin_Abstract implements Debug_Plugin_
 			$class_extends = $this->getClassExtends($ref_object);
 			$class_interfaces = $this->getClassInterfaces($ref_object);
 			$class_properties = $this->getClassProperties($ref_object, $var);
+			$class_properties_parent = $this->getClassPropertiesParentPrivate($ref_object, $var);
+			$class_properties = array_replace($class_properties, $class_properties_parent);
 			$class_method = $this->getClassMethod($ref_object);
 			$class_traits = $ref_object->getTraits();
 
@@ -142,7 +144,7 @@ class Debug_Plugin_Object extends Debug_Plugin_Abstract implements Debug_Plugin_
 	 *
 	 * @param ReflectionObject $ref_class
 	 */
-	private function  getClassExtends(ReflectionObject $ref_class) {
+	private function getClassExtends(ReflectionObject $ref_class) {
 		$params=array();
 		$extends = $ref_class->getParentClass();
 		while (($ref_class = $ref_class->getParentClass()) instanceof ReflectionClass) {
@@ -191,6 +193,46 @@ class Debug_Plugin_Object extends Debug_Plugin_Abstract implements Debug_Plugin_
 		}
 		return $ret;
 	}
+
+	/**
+	 * Получить данные о свойствах родительских классов
+	 *
+	 * @param ReflectionObject $ref_class
+	 * @param unknown_type $object
+	 */
+	private function getClassPropertiesParentPrivate(ReflectionObject $ref_class, $object) {
+
+		$inspects = array(
+			'isPrivate'   => 'private',
+			'isStatic'    => 'static',
+		);
+
+		$ret = array();
+
+		while (($ref_class = $ref_class->getParentClass()) instanceof ReflectionClass) {
+
+			$properties = $ref_class->getProperties();
+
+			foreach($properties as $ref_prop) {
+				$params = array();
+				if ($ref_prop->isPrivate()) {
+					foreach ($inspects as $inspect=>$info) {
+						if ($ref_prop->{$inspect}()) {
+							$params[] = $info;
+						}
+					}
+				}
+				$param_properties  = implode(' ', $params);
+				$ref_prop->setAccessible(true);
+				$value = $ref_prop->getValue($object);
+				$ret[$ref_class->getName().'::'.$ref_prop->getName()] = array('property'=>$param_properties, 'value'=>$value);
+			}
+		}
+		return $ret;
+	}
+
+
+
 
 	/**
 	 * Получить данные о методах

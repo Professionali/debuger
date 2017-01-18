@@ -275,7 +275,11 @@ class Debug_Plugin_Object extends Debug_Plugin_Abstract implements Debug_Plugin_
 				}
 				$param_info = array();
 				$param_info[] = $param->isOptional() ? '[' : '';
-				$param_info[] = is_object($param->getClass()) ? $param->getClass()->getName().' ' : '';
+				try {
+					$param_info[] = is_object($param->getClass()) ? $param->getClass()->getName().' ' : '';
+				} catch (\ReflectionException $e) { // bugfix for error: Class <class_name> does not exist
+					$param_info[] = '';
+				}
 				$param_info[] = $param->isArray() ? 'array ' : '';
 				$param_info[] = $param->isPassedByReference() ? '&' : '';
 				$param_info[] = '$'.$param->getName();

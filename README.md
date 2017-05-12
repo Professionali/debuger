@@ -3,6 +3,8 @@ Debuger
 
 The error handler and dump variables.
 
+<img src="docs/web-p.gif" align="center">
+
 ## Installation
 
 Download repository:

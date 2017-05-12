@@ -24,16 +24,28 @@ Show variable dump:
 
 ### In Web mode
 
+Notice
+
 ![notice in web](docs/web-notice.jpg)
 
+Exception
+
 ![exception in web](docs/web-exception.jpg)
+
+Exception trace
 
 ![exception trace in web](docs/web-exception-trace.jpg)
 
 ### In CLI mode
 
+Notice
+
 ![notice in cli](docs/cli-notice.jpg)
 
+Exception
+
 ![exception in cli](docs/cli-exception.jpg)
+
+Variable dump in CLI
 
 ![function p() in cli](docs/cli-p.jpg)

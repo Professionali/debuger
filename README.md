@@ -3,7 +3,7 @@ Debuger
 
 The error handler and dump variables.
 
-<img src="docs/web-p.gif" align="center">
+![function p()](docs/web-p.gif)
 
 ## Installation
 
@@ -21,3 +21,19 @@ Registr in `php.ini`:
 Show variable dump:
 
     p($my_var);
+
+### In Web mode
+
+![notice in web](docs/web-notice.jpg)
+
+![exception in web](docs/web-exception.jpg)
+
+![exception trace in web](docs/web-exception-trace.jpg)
+
+### In CLI mode
+
+![notice in cli](docs/cli-notice.jpg)
+
+![exception in cli](docs/cli-exception.jpg)
+
+![function p() in cli](docs/cli-p.jpg)
